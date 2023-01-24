@@ -1,0 +1,106 @@
+"""
+Copyright 2019 Kaeo-19, Nasanian
+
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"""  
+
+import json
+import logging
+import random #For random interest and tax rates
+
+class server:
+    """Collection of server functions:
+    Loan, Tax, etc.
+    """
+    
+    def server_loan(withdraw_member: int, loan_amount: int, interest_rate: float) -> str:
+        """
+        Loan an amount of money out to a member from the server wallet
+        """
+
+    def server_tax(tax_rate: float) -> str:
+        """
+        Tax each player with balance over lowest_tax_bracket
+        """
+        
+def transfer_coin(withdraw_member: int, deposit_member: int. amount: int) -> str:
+    #Withdraw from this users account
+    logging.info("Opening wallet ID {} to withdraw {} from.".format(str(withdraw_member), str(amount)))
+    with open('../users/{}.json'.format(str(withdraw_member)), 'rw') as withdraw_file:
+        logging.info("Wallet open sucsess")
+        parsed_w = json.loads(withdraw_file)
+        bal = withdraw_file[str(withdraw_member)]['balance']
+        new_bal = int(bal) - amount
+        if new_bal < 0:
+            logging.warn("User {} tried to transfer more then they had!".format(str(withdraw_member)))
+            return "Balance can not be negative!"
+        else:
+            for item in parsed_w[str(withdraw_member)]:
+                item['balance'] = new_bal
+
+            json.dumps(withdraw_file)
+            logging.info("Withdrawal complete, closing wallet {}".format(str(withdraw_member)))
+            withdraw_file.close()
+            
+    logging.info("opening wallet ID {} to deposit {} into.".format(str(deposit_member), str(amount)))
+    with open('../users/{}.json'.format(str(deposit_member)), "rw") as deposit_file:
+        parsed_d = json.loads(deposit_file)
+        bal_d = deposit_file[str(deposit_member)]['balance']
+        new_bal = int(bal_d) + amount
+        for item in parsed_d[str(deposit_member)]:
+            item['balance'] = new_bal
+
+        json.dumps(deposit_file)
+        logging.
+        deposit_file.close()
+
+def check_wallet(UUID: int = None) -> str:
+    #Check users account
+    if UUID != None:
+        UUID = str(UUID)
+    
+    with open('../users/{}.json'.format(str(UUID)), "rw") as user_file:
+        user_file = json.loads(user_file.read())
+        bal = user_file[str(UUID)]['balance']
+        user_file.close()
+
+   return str(bal)
+
+
+def fine_coins(UUID: int = None) -> str:
+    """
+    Fines a user if there are certain words/behaviors that are not tolerated
+    """
+    with open('./users/{}.json'.format(UUID), "w") as user_file:
+        parsed_file = json.loads(user_file)
+        bal_user = user_file[str(UUID)]['balance']
+        new_user_balance = bal_user - fine_amount
+        for item in parsed_file[str(UUID)]:
+            item['balance'] = new_user_balance
+
+        json.dumps(parsed_file)
+        logging.info("Altered a users balance: {} to {}".format(str(UUID), str(new_user_balance)))
+        user_file.close()
+        
+def check_item_price(ITEM_ID: int = None) -> str:
+    """
+    checks an items price in $path/items
+    """
+    with open('./items/{}.json'.format(str(ITEM_ID)), "r") as item_file:
+        logging.warn("Accessed a file: {}".json(ITEM_ID))
+        return item_file['item_price']
+    
+def set_item_price(ITEM_ID: int = None, PRICE: int = None) -> str:
+    """
+    Sets an items price using itemsetprice
+    """
+    with open('./items{}.json'.format(str(ITEM_ID)), "w") as item_file:
+        parsed_file = json.loads(item_file)
+        parsed_file['item_price'] = PRICE
+        json.dumps(parsed_file)
+        item_file.close()

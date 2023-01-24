@@ -1,0 +1,18 @@
+{
+    "general": {
+	"name": "Ketabot",
+	"version": "1.0.0rc",
+	"author": "Hekate <3",
+	"Create_Profile_On_Join": "y"
+    },
+    "roles": {
+	"owner": 766477203557974036,
+	"admin": 789566261058076722,
+	"mod": 789566738269339698,
+	"muted": 800012803296723015
+    },
+    "eco": {
+	"UseEco": true,
+	"starting_bal": 100
+	}
+}
